@@ -6,7 +6,7 @@ from threading import Thread
 
 PORT = 31182
 HOST = 'localhost'
-users =  []
+users =  {}
 
 def sok_Strating(port, host):
     # Создание Сокета Который будет принимать данные
@@ -22,18 +22,27 @@ def sok_Strating(port, host):
 
 
 def connection(server):
+
     while True:
         conn, addr = server.accept()
         print("Имя и IP юзера", conn, "\n", addr)
-        t = Thread(target=message, args=(conn, addr))
+        t = Thread(target=message, args=(conn, addr, server))
         t.start()
 
-def message(conn, adrr):
-        while True:
+def message(conn, adrr, server):
+    nameget = False
+    if not nameget:
+        name = conn.recv(1024).decode("utf-8")
+        users[name] = conn
+        nameget = True
+        print(len(users))
+    while True:
             a = conn.recv(1024)
             if not a:
                 break
             print(a.decode("utf-8"), " From User :  ")
+            users["Jurai"].send(a)
+
 
 if __name__ == "__main__":
         server = sok_Strating(PORT, HOST)
