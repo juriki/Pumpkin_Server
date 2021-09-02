@@ -1,9 +1,10 @@
 import socket
-import asyncio
+import time
+
 from threading import Thread
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect(('localhost', 31182))
-s.sendall("Jurai".encode("utf-8"))
+s.sendall("Jura".encode("utf-8"))
 
 def thread(s):
     t = Thread(target=mes, args=(s, 2))
@@ -15,7 +16,8 @@ def thread(s):
 def mes(s, num=0):
     while True:
         data = s.recv(1024)
-        print("\nNew message from",data.decode("utf-8"),"\nSano Jotian : ", end=" ")
+        print("\nNew message ",data.decode("utf-8"),"\nSano Jotian : ", end=" ")
+        time.sleep(1)
 
 def sending(s, num=0):
     while True:
