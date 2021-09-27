@@ -8,6 +8,7 @@ s.connect(('localhost', 31182))
 login = "juriki".encode("utf-8")
 connection = True
 s.send(login)
+send_to_user = "juriki".encode("utf-8")
 
 def thread(s):
         t = Thread(target=mes, args=(s, 2))
@@ -36,12 +37,20 @@ def mes(s, num=0):
             time.sleep(1)
 
 def sending(s, num=0):
+    global send_to_user
     while True:
         text = input("Sano Jotian : ").encode("utf-8")
-        send_to_user = "jura".encode("utf-8")
-        s.send(send_to_user)
-        time.sleep(0.01)
-        s.send(text)
+        if text == "1".encode("utf-8"):
+            send_to_user_va = send_to_user
+            send_to_user = input("Input user Name Then press enter : ").encode("utf-8")
+            if send_to_user == None:
+                send_to_user = send_to_user_va
+                print("Next Message to : ", send_to_user.decode("utf-8"))
+                continue
+            else:
+                print("Next Message to : ", send_to_user.decode("utf-8"))
+                continue
+
 
 
 if __name__ == '__main__':

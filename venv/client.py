@@ -6,6 +6,7 @@ s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect(('localhost', 31182))
 login = "jura".encode('utf-8')
 password = "odin"
+send_to_user = "juriki".encode("utf-8")
 
 list= (login)
 
@@ -27,9 +28,20 @@ def mes(s, num=0):
         print("\nNew message ",data.decode("utf-8"),"\nSano Jotian : ")
 
 def sending(s, num=0):
+    global send_to_user
     while True:
         text = input("Sano Jotian : ").encode("utf-8")
-        send_to_user = "juriki".encode("utf-8")
+        if text == "1".encode("utf-8"):
+            send_to_user_va =send_to_user
+            send_to_user = input("Input user Name Then press enter : ").encode("utf-8")
+            if send_to_user == None:
+                send_to_user =send_to_user_va
+                print("Next Message to : ", send_to_user.decode("utf-8"))
+                continue
+            else:
+                print("Next Message to : ", send_to_user.decode("utf-8"))
+                continue
+
         s.send(send_to_user)
         time.sleep(0.01)
         s.send(text)
